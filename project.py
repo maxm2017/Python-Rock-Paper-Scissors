@@ -4,7 +4,14 @@ import random
 selected = False
 answer = " "
 opponentsChoice = " "
-choices = ["Rock", "Paper", "Scissors"]
+choices = ["rock", "paper", "scissors"]
+
+#Dictionary defining which choice wins against which 
+winsAgainst = {
+    "rock": "scissors",
+    "paper":"rock",
+    "scissors": "paper"
+}
 
 while True:
 
@@ -16,6 +23,8 @@ while True:
         if answer in choices:
             selected = True
         else:
+            print(f"Your answer is {answer}")
+            print(f"The choices were {choices}")
             print("Invalid answer")
 
     # set selected back to false for the next round 
@@ -23,29 +32,20 @@ while True:
 
     #randomly select a choice for the oppononent 
     opponentsChoice = random.choice(choices)
-    print(f"Your oponnents choice is: {opponentsChoice}")
-    opponentsChoice = opponentsChoice.lower()
+    print(f"Your opponents choice is: {opponentsChoice}")
 
-
-    #logic to see who wins the game
-    result = " "
-    if answer == "rock" and opponentsChoice == "paper":
-        result = "loss"
-    elif answer == "scissors" and opponentsChoice == "rock":
-        result = "loss"
-    elif answer == "paper" and opponentsChoice == "scissors":
-        result = "loss"
-    elif opponentsChoice== "rock" and answer == "paper":
-        result = "win"
-    elif opponentsChoice == "scissors" and answer == "rock":
-        result = "win"
-    elif opponentsChoice == "paper" and answer == "scissors":
-        result = "win"
-    else:
+    #Decides a draw if player and opponent choices match 
+    if answer == opponentsChoice:
         result = "draw"
 
-    print(f"Result: {result}")
+    #checks each entry in the dictionary to see if the player has won against opponent, sets result to win if so, loss if not 
+    for winner, loser in winsAgainst.items():
+        if answer == winner and opponentsChoice == loser:
+            result = "win"
+            break
+        result = "loss"
 
+    print(f"Result: {result}")
 
     # give the user the chance to play again, if Y is entered to back to start of loop, else break
     print("Enter Y to play again, enter anything else to quit: ")
