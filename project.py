@@ -4,27 +4,27 @@ import random
 selected = False
 answer = " "
 opponentsChoice = " "
-choices = ["rock", "paper", "scissors"]
+choices = ["rock", "paper", "scissors", "lizard", "spock"]
 
 #Dictionary defining which choice wins against which 
 winsAgainst = {
-    "rock": "scissors",
-    "paper":"rock",
-    "scissors": "paper"
+    "rock": ["scissors","lizard"],
+    "paper": ["rock", "spock"],
+    "scissors": ["paper","lizard"],
+    "lizard": ["paper", "spock"],
+    "spock" : ["scissors", "rock"]
 }
 
 while True:
 
     #A while loop that will repeat until the user gives a valid answer 
     while selected==False:
-        print("Pick Rock, Paper, or Scissors")
+        print(f"Pick  from {choices}")
         answer = input()
         answer = answer.lower()
         if answer in choices:
             selected = True
         else:
-            print(f"Your answer is {answer}")
-            print(f"The choices were {choices}")
             print("Invalid answer")
 
     # set selected back to false for the next round 
@@ -39,8 +39,8 @@ while True:
         result = "draw"
 
     #checks each entry in the dictionary to see if the player has won against opponent, sets result to win if so, loss if not 
-    for winner, loser in winsAgainst.items():
-        if answer == winner and opponentsChoice == loser:
+    for winner, losers in winsAgainst.items():
+        if answer == winner and opponentsChoice in losers:
             result = "win"
             break
         result = "loss"
